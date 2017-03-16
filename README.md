@@ -9,5 +9,11 @@
 
 This application shows how to use bluetooth gatt server to control a LED on the ESP32 Thing board.
 
-Look at the User Interface (iOS Swift Project [here](). )
+Take a look at the User Interface (iOS Swift Project created by [nafisa2016](https://github.com/nafisa2016)  [here](https://github.com/nafisa2016/ESP32ThingDemo). )
 
+## To build project
+```make menuconfig
+make all```
+
+## To flash to board
+```make flash```
