@@ -144,6 +144,9 @@ static struct gatts_profile_inst gl_profile_tab[PROFILE_NUM] = {
     },
 };
 
+static uint8_t led_state = 0;
+
+
 static void gap_event_handler(esp_gap_ble_cb_event_t event, esp_ble_gap_cb_param_t *param)
 {
     switch (event) {
@@ -190,8 +193,8 @@ static void gatts_profile_a_event_handler(esp_gatts_cb_event_t event, esp_gatt_i
         esp_gatt_rsp_t rsp;
         memset(&rsp, 0, sizeof(esp_gatt_rsp_t));
         rsp.attr_value.handle = param->read.handle;
-        rsp.attr_value.len = 4;
-        rsp.attr_value.value[0] = 0xde;
+        rsp.attr_value.len = 1;
+        rsp.attr_value.value[0] = led_state;
         rsp.attr_value.value[1] = 0xed;
         rsp.attr_value.value[2] = 0xbe;
         rsp.attr_value.value[3] = 0xef;
@@ -201,20 +204,24 @@ static void gatts_profile_a_event_handler(esp_gatts_cb_event_t event, esp_gatt_i
     }
     case ESP_GATTS_WRITE_EVT: {
         ESP_LOGI(GATTS_TAG, "GATT_WRITE_EVT, conn_id %d, trans_id %d, handle %d\n", param->write.conn_id, param->write.trans_id, param->write.handle);
-        ESP_LOGI(GATTS_TAG, "GATT_WRITE_EVT, value len %d, value %08x\n", param->write.len, *(uint32_t *)param->write.value);
+        ESP_LOGI(GATTS_TAG, "GATT_WRITE_EVT, value len %d, value %02x\n", param->write.len, param->write.value[0]);
         esp_ble_gatts_send_response(gatts_if, param->write.conn_id, param->write.trans_id, ESP_GATT_OK, NULL);
+        led_state = ((param->write.value[0]) ? 1 : 0);
+        gpio_set_level(BLINK_GPIO, led_state);
+        #if 0
         uint32_t cmd = *(uint32_t *)param->write.value;
         ESP_LOGI(GATTS_TAG, "Received Command: %d\n", (int)cmd);
         if(0 == cmd)
         {
             ESP_LOGI(GATTS_TAG, "Received Command: LED Off\n");
-            gpio_set_level(BLINK_GPIO, 0);
+            gpio_set_level(BLINK_GPIO, led_state);
         }
         else if(1 == cmd)
         {
             ESP_LOGI(GATTS_TAG, "Received Command: LED On\n");
-            gpio_set_level(BLINK_GPIO, 1);
+            gpio_set_level(BLINK_GPIO, led_state);
         }
+        #endif
         break;
     }
     case ESP_GATTS_EXEC_WRITE_EVT:
@@ -305,8 +312,8 @@ static void gatts_profile_b_event_handler(esp_gatts_cb_event_t event, esp_gatt_i
         esp_gatt_rsp_t rsp;
         memset(&rsp, 0, sizeof(esp_gatt_rsp_t));
         rsp.attr_value.handle = param->read.handle;
-        rsp.attr_value.len = 4;
-        rsp.attr_value.value[0] = 0xde;
+        rsp.attr_value.len = 1;
+        rsp.attr_value.value[0] = led_state;
         rsp.attr_value.value[1] = 0xed;
         rsp.attr_value.value[2] = 0xbe;
         rsp.attr_value.value[3] = 0xef;
@@ -316,21 +323,24 @@ static void gatts_profile_b_event_handler(esp_gatts_cb_event_t event, esp_gatt_i
     }
     case ESP_GATTS_WRITE_EVT: {
         ESP_LOGI(GATTS_TAG, "GATT_WRITE_EVT, conn_id %d, trans_id %d, handle %d\n", param->write.conn_id, param->write.trans_id, param->write.handle);
-        ESP_LOGI(GATTS_TAG, "GATT_WRITE_EVT, value len %d, value %08x\n", param->write.len, *(uint32_t *)param->write.value);
+        ESP_LOGI(GATTS_TAG, "GATT_WRITE_EVT, value len %d, value %02x\n", param->write.len, param->write.value[0]);
+        esp_ble_gatts_send_response(gatts_if, param->write.conn_id, param->write.trans_id, ESP_GATT_OK, NULL);
+        led_state = ((param->write.value[0]) ? 1 : 0);
+        gpio_set_level(BLINK_GPIO, led_state);
+        #if 0
         uint32_t cmd = *(uint32_t *)param->write.value;
         ESP_LOGI(GATTS_TAG, "Received Command: %d\n", (int)cmd);
         if(0 == cmd)
         {
             ESP_LOGI(GATTS_TAG, "Received Command: LED Off\n");
-            gpio_set_level(BLINK_GPIO, 0);
+            gpio_set_level(BLINK_GPIO, led_state);
         }
         else if(1 == cmd)
         {
             ESP_LOGI(GATTS_TAG, "Received Command: LED On\n");
-            gpio_set_level(BLINK_GPIO, 1);
+            gpio_set_level(BLINK_GPIO, led_state);
         }
-
-        esp_ble_gatts_send_response(gatts_if, param->write.conn_id, param->write.trans_id, ESP_GATT_OK, NULL);
+        #endif
         break;
     }
     case ESP_GATTS_EXEC_WRITE_EVT:
