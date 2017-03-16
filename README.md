@@ -1,37 +1,13 @@
-## Welcome to GitHub Pages
+## Welcome to ESP32 Bluetooth Example for Sparkfun's ESP32 Thing board 
 
-You can use the [editor on GitHub](https://github.com/Mrunmoy/esp32_ble_gatt_server_ios_led_control/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+[Click here for Sparkfun's page on ESP32 Thing](https://www.sparkfun.com/products/13907)
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+[Click here for ESP32 bluetooth original example project](https://github.com/espressif/esp-idf/tree/master/examples/bluetooth/gatt_server)
 
-### Markdown
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+### Program Description
 
-```markdown
-Syntax highlighted code block
+This application shows how to use bluetooth gatt server to control a LED on the ESP32 Thing board.
 
-# Header 1
-## Header 2
-### Header 3
+Look at the User Interface (iOS Swift Project [here](). )
 
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/Mrunmoy/esp32_ble_gatt_server_ios_led_control/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
