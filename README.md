@@ -4,6 +4,7 @@
 
 [Click here for ESP32 bluetooth original example project](https://github.com/espressif/esp-idf/tree/master/examples/bluetooth/gatt_server)
 
+[Youtube video of demo](https://www.youtube.com/watch?v=_cCWLoUsn_g)
 
 ### Program Description
 
